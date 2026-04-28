@@ -30,6 +30,10 @@ function setTranscript(value) {
   voiceTranscript.value = value || defaultPrompt;
 }
 
+function normalizeQuestion(question) {
+  return (question || "").trim();
+}
+
 function closeSagePanel() {
   sagePanel.classList.remove("visible");
   sagePanel.setAttribute("aria-hidden", "true");
@@ -134,33 +138,75 @@ function toSentenceCase(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-function generateDraft(question) {
-  const normalized = question.trim().toLowerCase();
-  const promptLabel = toSentenceCase(question.trim() || defaultPrompt);
+function buildBaseResponse(question) {
+  const normalized = question.toLowerCase();
 
   if (normalized.includes("last visit") || normalized.includes("summarize")) {
-    return `Reviewed the prior visit and interval history with the patient. Since the last encounter, the patient reports stable day-to-day symptoms without new cardiopulmonary complaints, no recent urgent care visits, and good adherence with the current medication plan. We revisited the previous laboratory abnormalities and overall treatment response, then reinforced follow-up timing, return precautions, and continued monitoring as scheduled.`;
+    return `Interval history reviewed from the prior visit. The patient reports an overall stable course since the last encounter, without new cardiopulmonary complaints, no interval ED visits, and continued adherence to the current treatment plan. Prior laboratory findings were revisited with the patient, and the plan remains continued monitoring, repeat testing as scheduled, and reinforcement of return precautions.`;
   }
 
   if (normalized.includes("lab") || normalized.includes("cbc") || normalized.includes("result")) {
-    return `Requested Sage support for: ${promptLabel}. The note draft highlights mild persistent laboratory abnormalities without clear interval worsening, including previously documented CBC variation. Findings were reviewed with the patient, questions were answered, and the current plan is to trend repeat labs, monitor for new symptoms, and continue the present management approach pending follow-up results.`;
+    return `Laboratory trends were reviewed for the chart. Previously documented CBC variation appears persistent but clinically stable without a clear interval decline. Findings were discussed with the patient, and the working plan is to continue trending results, monitor for symptom change, and follow up on repeat studies as already ordered.`;
   }
 
   if (normalized.includes("plan") || normalized.includes("next step") || normalized.includes("follow up")) {
-    return `Requested Sage support for: ${promptLabel}. The assessment and plan emphasize a stable clinical course today, continuation of the existing medication and monitoring strategy, and close outpatient follow-up. The patient was advised on warning signs that should prompt earlier reassessment, and next steps were reviewed in plain language before the visit concluded.`;
+    return `Assessment and plan reviewed for the current encounter. The patient appears clinically stable today, so the plan is to continue the present management strategy, reinforce monitoring instructions, and keep close outpatient follow-up. Return precautions were reviewed and next steps were explained clearly before closing the visit.`;
   }
 
   if (normalized.includes("med") || normalized.includes("medication")) {
-    return `Requested Sage support for: ${promptLabel}. Medication adherence was reviewed and the patient denies significant side effects or barriers to taking the current regimen. We discussed continued use of the present medications, reinforced counseling points, and documented that additional adjustments can be considered if symptoms change before the next scheduled follow-up.`;
+    return `Medication review completed for the chart. The patient reports ongoing adherence to the prescribed regimen and does not describe major side effects or new barriers to treatment. Current medications will be continued for now, with reassessment at follow-up if symptoms change or tolerance concerns emerge.`;
   }
 
-  return `Requested Sage support for: ${promptLabel}. The generated note summarizes the patient as clinically stable today with no major new concerns raised during review. We discussed interval symptoms, reviewed the most relevant history tied to this question, and documented a practical next-step plan including monitoring, follow-up, and return precautions as appropriate.`;
+  return `Sage reviewed the provider question and drafted a chart-ready response. The patient appears clinically stable based on the available context, with no major new concerns documented today. Relevant interval history, current assessment, and practical next steps were summarized in a way that can be dropped directly into the note and refined by the provider as needed.`;
+}
+
+function applyTweakInstruction(question, existingNote) {
+  const normalized = question.toLowerCase();
+
+  if (normalized.includes("short") || normalized.includes("concise") || normalized.includes("briefer")) {
+    return `Patient remains clinically stable since the last visit without major new concerns. Current plan, monitoring, and follow-up recommendations were reviewed with the patient.`;
+  }
+
+  if (normalized.includes("more detail") || normalized.includes("expand") || normalized.includes("elaborate")) {
+    return `${existingNote} Additional detail added per provider request: interval symptoms remain stable, adherence has been consistent, prior results were reviewed in context, and follow-up expectations plus return precautions were discussed clearly with the patient.`;
+  }
+
+  if (normalized.includes("assessment")) {
+    return `Assessment: ${existingNote}`;
+  }
+
+  if (normalized.includes("plan")) {
+    return `${existingNote} Plan: continue current management, trend indicated studies, reinforce precautions, and reassess at follow-up unless symptoms change sooner.`;
+  }
+
+  if (normalized.includes("lab") || normalized.includes("cbc") || normalized.includes("result")) {
+    return `${existingNote} Updated emphasis: prior laboratory findings were discussed specifically, with no clear evidence of interval worsening and a continued plan for repeat testing and follow-up review.`;
+  }
+
+  if (normalized.includes("med") || normalized.includes("medication")) {
+    return `${existingNote} Updated emphasis: medication adherence and tolerance were reviewed, with no major side effects reported at this time.`;
+  }
+
+  return `Revised per provider instruction: ${toSentenceCase(question)}. ${existingNote}`;
+}
+
+function generateDraft(question, existingNote = "") {
+  const cleanQuestion = normalizeQuestion(question) || defaultPrompt;
+
+  if (existingNote.trim()) {
+    return applyTweakInstruction(cleanQuestion, existingNote.trim());
+  }
+
+  return buildBaseResponse(cleanQuestion);
 }
 
 function insertDraft(question, { animate = true } = {}) {
+  const existingNote = examNote.textContent.trim();
+  const nextDraft = generateDraft(question, existingNote);
+
   examNote.style.transition = animate ? "opacity 220ms ease" : "none";
   examNote.style.opacity = animate ? "0.35" : "1";
-  examNote.textContent = generateDraft(question).trim();
+  examNote.textContent = nextDraft.trim();
   updateExamState();
 
   if (animate) {
@@ -250,20 +296,29 @@ voiceButton.addEventListener("click", () => {
 askButton.addEventListener("click", () => {
   if (state !== "prompt") return;
 
-  const question = voiceTranscript.value.trim() || defaultPrompt;
+  const question = normalizeQuestion(voiceTranscript.value) || defaultPrompt;
 
   askButton.disabled = true;
   askButton.textContent = "Drafting...";
   stopListening();
-  closeSagePanel();
   showLoading();
   state = "loading";
+  voiceStatus.textContent = "Sage is drafting a response for the chart...";
 
   loadingTimer = window.setTimeout(() => {
     hideLoading();
     askButton.disabled = false;
     askButton.textContent = "Ask Sage";
     insertDraft(question);
+    voiceStatus.textContent = "Ask a follow-up to refine the note.";
+    sagePanel.classList.add("visible");
+    sagePanel.setAttribute("aria-hidden", "false");
+    sageTrigger.setAttribute("aria-expanded", "true");
+    state = "prompt";
+    requestAnimationFrame(() => {
+      voiceTranscript.focus();
+      voiceTranscript.select();
+    });
   }, 1000);
 });
 
