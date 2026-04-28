@@ -105,6 +105,16 @@
                 <div id="examNote" class="exam-note" contenteditable="true" aria-label="Exam note"></div>
               </div>
 
+              <div id="loadingChip" class="loading-chip" aria-hidden="true">
+                <span class="spinner"></span>
+                Sage is drafting documentation...
+              </div>
+
+              <div class="decision-row hidden" aria-live="polite">
+                <button id="acceptButton" class="outline-btn" type="button">Accept</button>
+                <button id="discardButton" class="outline-btn" type="button">Discard</button>
+              </div>
+
               <div id="sagePanel" class="sage-panel" aria-hidden="true">
                 <div class="sage-mark" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -124,23 +134,11 @@
                   <div id="voiceStatus" class="voice-status">Use the microphone to speak your question.</div>
                 </div>
                 <button id="voiceButton" class="voice-button" type="button" aria-label="Use microphone">
-                  <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                    <path
-                      d="M32 6c-7.6 0-13.8 6.2-13.8 13.8v16.4C18.2 43.8 24.4 50 32 50s13.8-6.2 13.8-13.8V19.8C45.8 12.2 39.6 6 32 6Zm18.8 29.4c0-2.3-1.9-4.2-4.2-4.2s-4.2 1.9-4.2 4.2c0 5.7-4.7 10.4-10.4 10.4s-10.4-4.7-10.4-10.4c0-2.3-1.9-4.2-4.2-4.2s-4.2 1.9-4.2 4.2c0 9.1 6.6 16.6 15.2 18v5.2h-3.6c-2.3 0-4.2 1.9-4.2 4.2S22.5 67 24.8 67h14.4c2.3 0 4.2-1.9 4.2-4.2s-1.9-4.2-4.2-4.2h-3.6v-5.2c8.6-1.4 15.2-8.9 15.2-18Z"
-                    />
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00002 2C7.03352 2 6.25002 2.7835 6.25002 3.75V7.25C6.25002 8.2165 7.03352 9 8.00002 9C8.96652 9 9.75002 8.2165 9.75002 7.25V3.75C9.75002 2.7835 8.96652 2 8.00002 2ZM4.25002 3.75C4.25002 1.67893 5.92896 0 8.00002 0C10.0711 0 11.75 1.67893 11.75 3.75V7.25C11.75 9.32107 10.0711 11 8.00002 11C5.92896 11 4.25002 9.32107 4.25002 7.25V3.75ZM2.84458 8.26216C3.39015 8.1763 3.90202 8.54898 3.98787 9.09455C4.19757 10.4272 5.75186 11.75 8.00002 11.75C10.2552 11.75 11.8018 10.4521 12.0118 9.09683C12.0964 8.55106 12.6074 8.17721 13.1532 8.2618C13.699 8.34639 14.0728 8.8574 13.9882 9.40317C13.6262 11.7389 11.4831 13.3394 9.00002 13.6815V15C9.00002 15.5523 8.55231 16 8.00002 16C7.44774 16 7.00002 15.5523 7.00002 15V13.6805C4.51274 13.333 2.37463 11.7088 2.01218 9.40545C1.92633 8.85988 2.299 8.34801 2.84458 8.26216Z" fill="#0466B4"/>
                   </svg>
                 </button>
                 <button id="askSageButton" class="ask-button" type="button">Ask Sage</button>
-              </div>
-
-              <div id="loadingChip" class="loading-chip" aria-hidden="true">
-                <span class="spinner"></span>
-                Sage is drafting documentation...
-              </div>
-
-              <div class="decision-row hidden" aria-live="polite">
-                <button id="acceptButton" class="outline-btn" type="button">Accept</button>
-                <button id="discardButton" class="outline-btn" type="button">Discard</button>
               </div>
             </div>
 

@@ -38,6 +38,7 @@ function closeSagePanel() {
   sagePanel.classList.remove("visible");
   sagePanel.setAttribute("aria-hidden", "true");
   sageTrigger.setAttribute("aria-expanded", "false");
+  sagePanel.classList.remove("docked");
 }
 
 function openSagePanel() {
@@ -47,6 +48,7 @@ function openSagePanel() {
   examEditorShell.classList.add("active");
   sageTrigger.classList.add("caret-on");
   sageTrigger.setAttribute("aria-expanded", "true");
+  sagePanel.classList.remove("docked");
   sagePanel.classList.add("visible");
   sagePanel.setAttribute("aria-hidden", "false");
   voiceStatus.textContent = "Use the microphone to speak your question.";
@@ -250,6 +252,11 @@ function initializeFromQuery() {
 
   if (requestedState === "inserted") {
     insertDraft(defaultPrompt, { animate: false });
+    sagePanel.classList.add("docked", "visible");
+    sagePanel.setAttribute("aria-hidden", "false");
+    sageTrigger.setAttribute("aria-expanded", "true");
+    voiceStatus.textContent = "Ask a follow-up to refine the note.";
+    state = "prompt";
   }
 }
 
@@ -311,6 +318,7 @@ askButton.addEventListener("click", () => {
     askButton.textContent = "Ask Sage";
     insertDraft(question);
     voiceStatus.textContent = "Ask a follow-up to refine the note.";
+    sagePanel.classList.add("docked");
     sagePanel.classList.add("visible");
     sagePanel.setAttribute("aria-hidden", "false");
     sageTrigger.setAttribute("aria-expanded", "true");
@@ -332,8 +340,9 @@ discardButton.addEventListener("click", resetToDefault);
 document.addEventListener("click", (event) => {
   const clickedInsidePanel = sagePanel.contains(event.target);
   const clickedTrigger = sageTrigger.contains(event.target);
+  const hasDraft = examNote.textContent.trim().length > 0;
 
-  if (state === "prompt" && !clickedInsidePanel && !clickedTrigger) {
+  if (state === "prompt" && !clickedInsidePanel && !clickedTrigger && !hasDraft) {
     stopListening();
     closeSagePanel();
     sageTrigger.classList.remove("caret-on");

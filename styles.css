@@ -391,6 +391,12 @@ input {
   pointer-events: auto;
 }
 
+.sage-panel.docked {
+  position: static;
+  width: min(840px, calc(100% - 50px));
+  margin-top: 12px;
+}
+
 .sage-mark {
   width: 28px;
   height: 28px;
@@ -441,8 +447,8 @@ input {
 }
 
 .voice-button svg {
-  width: 21px;
-  height: 21px;
+  width: 16px;
+  height: 16px;
 }
 
 .voice-button.listening {
