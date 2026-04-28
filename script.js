@@ -11,10 +11,6 @@ const acceptButton = document.getElementById("acceptButton");
 const discardButton = document.getElementById("discardButton");
 const decisionRow = document.querySelector(".decision-row");
 
-const aiDraft = `
-Reviewed the prior visit and interval history with the patient. Since the last encounter, the patient reports stable day-to-day symptoms without new cardiopulmonary complaints, no recent emergency visits, and good adherence with the current medication plan. Prior abnormal CBC findings were revisited, including persistent low mean corpuscular hemoglobin concentration with mildly elevated red cell distribution width and mean platelet volume; these results remain clinically stable compared with the previous set. We discussed continued monitoring, return precautions, and the plan to repeat ordered laboratory work as scheduled while maintaining the current treatment approach.
-`;
-
 const defaultPrompt = "Summarize the last visit";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -133,10 +129,38 @@ function startListening() {
   recognition.start();
 }
 
-function insertDraft({ animate = true } = {}) {
+function toSentenceCase(value) {
+  if (!value) return "";
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function generateDraft(question) {
+  const normalized = question.trim().toLowerCase();
+  const promptLabel = toSentenceCase(question.trim() || defaultPrompt);
+
+  if (normalized.includes("last visit") || normalized.includes("summarize")) {
+    return `Reviewed the prior visit and interval history with the patient. Since the last encounter, the patient reports stable day-to-day symptoms without new cardiopulmonary complaints, no recent urgent care visits, and good adherence with the current medication plan. We revisited the previous laboratory abnormalities and overall treatment response, then reinforced follow-up timing, return precautions, and continued monitoring as scheduled.`;
+  }
+
+  if (normalized.includes("lab") || normalized.includes("cbc") || normalized.includes("result")) {
+    return `Requested Sage support for: ${promptLabel}. The note draft highlights mild persistent laboratory abnormalities without clear interval worsening, including previously documented CBC variation. Findings were reviewed with the patient, questions were answered, and the current plan is to trend repeat labs, monitor for new symptoms, and continue the present management approach pending follow-up results.`;
+  }
+
+  if (normalized.includes("plan") || normalized.includes("next step") || normalized.includes("follow up")) {
+    return `Requested Sage support for: ${promptLabel}. The assessment and plan emphasize a stable clinical course today, continuation of the existing medication and monitoring strategy, and close outpatient follow-up. The patient was advised on warning signs that should prompt earlier reassessment, and next steps were reviewed in plain language before the visit concluded.`;
+  }
+
+  if (normalized.includes("med") || normalized.includes("medication")) {
+    return `Requested Sage support for: ${promptLabel}. Medication adherence was reviewed and the patient denies significant side effects or barriers to taking the current regimen. We discussed continued use of the present medications, reinforced counseling points, and documented that additional adjustments can be considered if symptoms change before the next scheduled follow-up.`;
+  }
+
+  return `Requested Sage support for: ${promptLabel}. The generated note summarizes the patient as clinically stable today with no major new concerns raised during review. We discussed interval symptoms, reviewed the most relevant history tied to this question, and documented a practical next-step plan including monitoring, follow-up, and return precautions as appropriate.`;
+}
+
+function insertDraft(question, { animate = true } = {}) {
   examNote.style.transition = animate ? "opacity 220ms ease" : "none";
   examNote.style.opacity = animate ? "0.35" : "1";
-  examNote.textContent = aiDraft.trim();
+  examNote.textContent = generateDraft(question).trim();
   updateExamState();
 
   if (animate) {
@@ -179,7 +203,7 @@ function initializeFromQuery() {
   }
 
   if (requestedState === "inserted") {
-    insertDraft({ animate: false });
+    insertDraft(defaultPrompt, { animate: false });
   }
 }
 
@@ -226,6 +250,8 @@ voiceButton.addEventListener("click", () => {
 askButton.addEventListener("click", () => {
   if (state !== "prompt") return;
 
+  const question = voiceTranscript.value.trim() || defaultPrompt;
+
   askButton.disabled = true;
   askButton.textContent = "Drafting...";
   stopListening();
@@ -237,7 +263,7 @@ askButton.addEventListener("click", () => {
     hideLoading();
     askButton.disabled = false;
     askButton.textContent = "Ask Sage";
-    insertDraft();
+    insertDraft(question);
   }, 1000);
 });
 

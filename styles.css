@@ -325,6 +325,10 @@ input {
   font-size: 17px;
 }
 
+.sage-trigger .placeholder {
+  flex: 1 1 auto;
+}
+
 .exam-note {
   min-height: 146px;
   padding: 14px;
@@ -342,24 +346,6 @@ input {
 
 .exam-note:focus {
   outline: none;
-}
-
-.mic-icon {
-  margin-left: auto;
-  width: 30px;
-  height: 30px;
-  color: #1995d3;
-  border: 2px solid currentColor;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-}
-
-.mic-icon svg {
-  width: 18px;
-  stroke: currentColor;
-  stroke-width: 1.8;
 }
 
 .fake-caret {
