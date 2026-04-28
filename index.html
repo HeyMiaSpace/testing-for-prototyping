@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sage EHR Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">✦</span>
+          <span class="brand-name">athenaOne</span>
+        </div>
+        <nav class="top-nav">
+          <a href="#">Calendar</a>
+          <a href="#">Patients</a>
+          <a href="#">Claims</a>
+          <a href="#">Financials</a>
+          <a href="#">Reports</a>
+          <a href="#">Quality</a>
+          <a href="#">Support</a>
+        </nav>
+        <div class="top-meta">
+          <div class="search-pill">Search</div>
+          <span>username</span>
+          <span>Log out</span>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar">
+          <div class="patient-badge">PT</div>
+          <div class="nav-icon active"><span>⌕</span><small>Find</small></div>
+          <div class="nav-icon"><span>✋</span><small>Allergies</small></div>
+          <div class="nav-icon"><span>⊕</span><small>Problems</small></div>
+          <div class="nav-icon"><span>💊</span><small>Meds</small></div>
+          <div class="nav-icon"><span>🧪</span><small>Results</small></div>
+          <div class="nav-icon"><span>🗂</span><small>Visits</small></div>
+          <div class="nav-icon"><span>♡</span><small>Care</small></div>
+        </aside>
+
+        <main class="main-panel">
+          <section class="patient-header">
+            <div class="patient-hero">
+              <h1>Patient TEST</h1>
+              <p>36yo M | 06-26-1984 | #1234 | E#1330</p>
+            </div>
+            <div class="patient-cards">
+              <div class="info-card">
+                <label>Contact</label>
+                <strong>123-456-7890</strong>
+              </div>
+              <div class="info-card">
+                <label>Appointments</label>
+                <strong>EDG 15 10-23-25</strong>
+              </div>
+              <div class="info-card">
+                <label>Provider</label>
+                <strong>James Wilson, MD</strong>
+              </div>
+              <div class="info-card">
+                <label>Insurance</label>
+                <strong>BCBS-IL BLUE C...</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-tabs">
+            <span>Review</span>
+            <span>HPI</span>
+            <span>ROS</span>
+            <span>PE</span>
+            <span class="active">A/P</span>
+            <span>Sign-off</span>
+          </section>
+
+          <section class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-wrap">
+                <h2>Assessment &amp; Plan</h2>
+                <button class="text-link" type="button">DIAGNOSES &amp; ORDERS</button>
+              </div>
+              <div class="chart-actions">
+                <button class="ghost-action" type="button">Sign Orders</button>
+                <button class="next-action" type="button">Next</button>
+              </div>
+            </div>
+
+            <div class="field-group sage-region">
+              <label class="field-label" for="sageTrigger">Exam</label>
+              <div class="exam-editor-shell">
+                <div
+                  id="sageTrigger"
+                  class="sage-trigger"
+                  role="button"
+                  tabindex="0"
+                  aria-expanded="false"
+                  aria-controls="sagePanel"
+                >
+                  <span class="placeholder">Press space for Sage</span>
+                  <span class="mic-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-4a3.5 3.5 0 1 0-7 0v4A3.5 3.5 0 0 0 12 15Z"
+                      />
+                      <path d="M18 11.5a6 6 0 1 1-12 0" />
+                      <path d="M12 17.5V21" />
+                      <path d="M9 21h6" />
+                    </svg>
+                  </span>
+                  <span class="fake-caret" aria-hidden="true"></span>
+                </div>
+                <div id="examNote" class="exam-note" contenteditable="true" aria-label="Exam note"></div>
+              </div>
+
+              <div id="sagePanel" class="sage-panel" aria-hidden="true">
+                <div class="sage-mark" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12.1 2.5c.8 2.7 2.8 4.6 5.6 5.3-2.8.7-4.8 2.6-5.6 5.3-.8-2.7-2.8-4.6-5.6-5.3 2.8-.7 4.8-2.6 5.6-5.3Zm6.2 8.6c.4 1.3 1.4 2.2 2.7 2.5-1.3.3-2.3 1.2-2.7 2.5-.4-1.3-1.4-2.2-2.7-2.5 1.3-.3 2.3-1.2 2.7-2.5ZM5.9 12.7c.6 1.9 2 3.2 3.9 3.7-1.9.5-3.3 1.8-3.9 3.7-.6-1.9-2-3.2-3.9-3.7 1.9-.5 3.3-1.8 3.9-3.7Z"
+                    />
+                  </svg>
+                </div>
+                <div class="voice-prompt">
+                  <input
+                    id="voiceTranscript"
+                    class="voice-transcript-input"
+                    type="text"
+                    value="Summarize the last visit"
+                    aria-label="Ask Sage question"
+                  />
+                  <div id="voiceStatus" class="voice-status">Use the microphone to speak your question.</div>
+                </div>
+                <button id="voiceButton" class="voice-button" type="button" aria-label="Use microphone">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-4a3.5 3.5 0 1 0-7 0v4A3.5 3.5 0 0 0 12 15Z"
+                    />
+                    <path d="M18 11.5a6 6 0 1 1-12 0" />
+                    <path d="M12 17.5V21" />
+                    <path d="M9 21h6" />
+                  </svg>
+                </button>
+                <button id="askSageButton" class="ask-button" type="button">Ask Sage</button>
+              </div>
+
+              <div id="loadingChip" class="loading-chip" aria-hidden="true">
+                <span class="spinner"></span>
+                Sage is drafting documentation...
+              </div>
+
+              <div class="decision-row hidden" aria-live="polite">
+                <button id="acceptButton" class="outline-btn" type="button">Accept</button>
+                <button id="discardButton" class="outline-btn" type="button">Discard</button>
+              </div>
+            </div>
+
+            <div class="note-layout">
+              <div class="note-column">
+                <div class="subsection">
+                  <p class="subsection-title">Prescription drug monitoring report</p>
+                  <p class="detail-line">Misuse 800&nbsp;&nbsp; Narcotics 652&nbsp;&nbsp; Overdose 650&nbsp;&nbsp; Sedatives 430&nbsp;&nbsp; Stimulants 000</p>
+                </div>
+
+                <div class="subsection">
+                  <p class="subsection-title">General examination of patient</p>
+                  <div class="empty-row"></div>
+                </div>
+
+                <div class="subsection">
+                  <p class="subsection-title">CBC w/ auto diff</p>
+                </div>
+
+                <div class="subsection">
+                  <p class="subsection-title">CMP, serum or plasma</p>
+                  <p class="muted">Send on 03-31-2022</p>
+                </div>
+              </div>
+
+              <div class="secondary-panels">
+                <div class="mini-card">
+                  <div class="mini-card-title">
+                    <span>Patient-Supplied Results</span>
+                    <span class="plus-badge">+</span>
+                  </div>
+                  <p class="muted">None recorded</p>
+                </div>
+
+                <div class="mini-card">
+                  <div class="mini-card-title">
+                    <span>Patient Goals</span>
+                    <span class="plus-badge">+</span>
+                  </div>
+                  <div class="empty-row compact"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
