@@ -45,7 +45,8 @@
           <section class="patient-header">
             <div class="patient-hero">
               <h1>Patient TEST</h1>
-              <p>36yo M | 06-26-1984 | #1234 | E#1330</p>
+              <p>72yo M | 04-18-1953 | #1234 | E#1330</p>
+              <div class="patient-problems">Diabetes mellitus with complications + Hypertension</div>
             </div>
             <div class="patient-cards">
               <div class="info-card">
@@ -67,16 +68,16 @@
             </div>
           </section>
 
-          <section class="section-tabs">
-            <span>Review</span>
-            <span>HPI</span>
-            <span>ROS</span>
-            <span>PE</span>
-            <span class="active">A/P</span>
-            <span>Sign-off</span>
+          <section class="section-tabs" aria-label="Chart sections">
+            <button class="section-tab" type="button" data-section="review">Review</button>
+            <button class="section-tab" type="button" data-section="hpi">HPI</button>
+            <button class="section-tab" type="button" data-section="ros">ROS</button>
+            <button class="section-tab" type="button" data-section="pe">PE</button>
+            <button class="section-tab active" type="button" data-section="ap">A/P</button>
+            <button class="section-tab" type="button" data-section="signoff">Sign-off</button>
           </section>
 
-          <section class="chart-card">
+          <section class="chart-card chart-view active" data-view="ap">
             <div class="chart-header">
               <div class="chart-title-wrap">
                 <h2>Assessment &amp; Plan</h2>
@@ -181,6 +182,160 @@
                   <div class="empty-row compact"></div>
                 </div>
               </div>
+            </div>
+          </section>
+
+          <section class="chart-view hpi-view" data-view="hpi">
+            <div class="hpi-layout">
+              <aside class="hpi-sidebar-card">
+                <div class="hpi-sidebar-header">
+                  <h3>Allergies</h3>
+                  <div class="allergy-meta">
+                    <span class="allergy-badge">OneChart</span>
+                    <span class="allergy-historical">HISTORICAL (0)</span>
+                    <button class="round-plus" type="button">+</button>
+                  </div>
+                </div>
+                <div class="allergy-source-row">
+                  <span>View allergies from other sources</span>
+                  <button class="round-chevron" type="button">›</button>
+                </div>
+                <div class="allergy-item">
+                  <strong>allergy 1</strong>
+                  <span>reaction, severity</span>
+                </div>
+                <div class="allergy-item">
+                  <strong>allergy 2</strong>
+                  <span>reaction, severity</span>
+                </div>
+                <div class="allergy-item">
+                  <strong>allergy 3</strong>
+                  <span>reaction, severity</span>
+                </div>
+                <label class="nkda-row"><input type="checkbox" /> NKDA</label>
+                <p class="allergy-warning">To satisfy MU requirements, add an allergy or check NKDA.</p>
+                <div class="allergy-note">NOTE</div>
+                <div class="allergy-reviewed">Reviewed</div>
+              </aside>
+
+              <div class="hpi-main-card">
+                <div class="hpi-top-row">
+                  <div class="hpi-title-wrap">
+                    <h2>History of Present Illness</h2>
+                    <button class="round-plus" type="button">+</button>
+                    <button class="round-star" type="button">☆</button>
+                  </div>
+                  <div class="hpi-right-actions">
+                    <button class="hpi-next" type="button">Next</button>
+                  </div>
+                </div>
+
+                <div class="hpi-note-entry">
+                  <input type="text" value="" placeholder="Add note" aria-label="Add HPI note" />
+                  <button class="hpi-mic" type="button" aria-label="Use microphone">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00002 2C7.03352 2 6.25002 2.7835 6.25002 3.75V7.25C6.25002 8.2165 7.03352 9 8.00002 9C8.96652 9 9.75002 8.2165 9.75002 7.25V3.75C9.75002 2.7835 8.96652 2 8.00002 2ZM4.25002 3.75C4.25002 1.67893 5.92896 0 8.00002 0C10.0711 0 11.75 1.67893 11.75 3.75V7.25C11.75 9.32107 10.0711 11 8.00002 11C5.92896 11 4.25002 9.32107 4.25002 7.25V3.75ZM2.84458 8.26216C3.39015 8.1763 3.90202 8.54898 3.98787 9.09455C4.19757 10.4272 5.75186 11.75 8.00002 11.75C10.2552 11.75 11.8018 10.4521 12.0118 9.09683C12.0964 8.55106 12.6074 8.17721 13.1532 8.2618C13.699 8.34639 14.0728 8.8574 13.9882 9.40317C13.6262 11.7389 11.4831 13.3394 9.00002 13.6815V15C9.00002 15.5523 8.55231 16 8.00002 16C7.44774 16 7.00002 15.5523 7.00002 15V13.6805C4.51274 13.333 2.37463 11.7088 2.01218 9.40545C1.92633 8.85988 2.299 8.34801 2.84458 8.26216Z" fill="#1696d2"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="hpi-template-card">
+                  <div class="hpi-template-toolbar">
+                    <div class="template-title-group">
+                      <span class="template-title">Template title</span>
+                      <button class="template-close" type="button">×</button>
+                    </div>
+                    <div class="template-controls">
+                      <span>All Normal</span>
+                      <span>Clear</span>
+                      <span>▾</span>
+                    </div>
+                  </div>
+
+                  <div class="hpi-template-section">Section title</div>
+
+                  <div class="hpi-finding-row">
+                    <span class="finding-label">Item name</span>
+                    <div class="finding-chips">
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-yellow">finding</span>
+                      <span class="chip chip-yellow">finding</span>
+                      <span class="chip chip-yellow">finding</span>
+                      <span class="chip chip-yellow">finding</span>
+                      <span class="chip chip-yellow">finding</span>
+                      <span class="chip chip-yellow">finding</span>
+                      <span class="chip chip-red">finding</span>
+                      <span class="chip chip-red">finding</span>
+                      <span class="chip chip-red">finding</span>
+                    </div>
+                  </div>
+
+                  <div class="hpi-divider"></div>
+
+                  <div class="hpi-finding-row compact">
+                    <span class="finding-label">Item name</span>
+                    <div class="finding-chips">
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                      <span class="chip chip-blue">finding</span>
+                    </div>
+                  </div>
+
+                  <div class="hpi-footer-note">
+                    <input type="text" value="" placeholder="Add note" aria-label="Add follow-up HPI note" />
+                    <button class="round-star" type="button">☆</button>
+                  </div>
+                  <div class="reported-by-row">
+                    <label>Reported by</label>
+                    <button class="reported-pill" type="button">Text ▾</button>
+                  </div>
+                </div>
+
+                <label class="ros-link-row"><input type="checkbox" /> ROS as noted in the HPI</label>
+              </div>
+
+              <aside class="hpi-right-rail">
+                <button class="hpi-orders-link" type="button">DIAGNOSES AND ORDERS</button>
+              </aside>
+            </div>
+          </section>
+
+          <section class="chart-card chart-view placeholder-view" data-view="review">
+            <div class="placeholder-card">
+              <h2>Review</h2>
+              <p>Review content is not part of this prototype yet.</p>
+            </div>
+          </section>
+
+          <section class="chart-card chart-view placeholder-view" data-view="ros">
+            <div class="placeholder-card">
+              <h2>ROS</h2>
+              <p>ROS content is not part of this prototype yet.</p>
+            </div>
+          </section>
+
+          <section class="chart-card chart-view placeholder-view" data-view="pe">
+            <div class="placeholder-card">
+              <h2>PE</h2>
+              <p>PE content is not part of this prototype yet.</p>
+            </div>
+          </section>
+
+          <section class="chart-card chart-view placeholder-view" data-view="signoff">
+            <div class="placeholder-card">
+              <h2>Sign-off</h2>
+              <p>Sign-off content is not part of this prototype yet.</p>
             </div>
           </section>
         </main>

@@ -10,6 +10,8 @@ const examNote = document.getElementById("examNote");
 const acceptButton = document.getElementById("acceptButton");
 const discardButton = document.getElementById("discardButton");
 const decisionRow = document.querySelector(".decision-row");
+const sectionTabs = Array.from(document.querySelectorAll(".section-tab"));
+const chartViews = Array.from(document.querySelectorAll(".chart-view"));
 
 const defaultPrompt = "Summarize the last visit";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -18,6 +20,16 @@ let state = "default";
 let loadingTimer;
 let recognition;
 let isListening = false;
+
+function setActiveSection(section) {
+  sectionTabs.forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.section === section);
+  });
+
+  chartViews.forEach((view) => {
+    view.classList.toggle("active", view.dataset.view === section);
+  });
+}
 
 function updateExamState() {
   const hasText = examNote.textContent.trim().length > 0;
@@ -364,3 +376,9 @@ examNote.addEventListener("blur", () => {
 setTranscript(defaultPrompt);
 updateExamState();
 initializeFromQuery();
+
+sectionTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    setActiveSection(tab.dataset.section);
+  });
+});
