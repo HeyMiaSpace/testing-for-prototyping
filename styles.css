@@ -395,6 +395,9 @@ input {
   position: static;
   width: min(840px, calc(100% - 50px));
   margin-top: 12px;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }
 
 .sage-mark {
