@@ -669,6 +669,8 @@ input {
 .hpi-main-card {
   background: #fff;
   border: 1px solid #dfdbe6;
+  padding: 16px;
+  min-height: 128px;
 }
 
 .hpi-title-wrap h2 {
@@ -695,10 +697,6 @@ input {
 
 .round-star {
   font-size: 19px;
-}
-
-.hpi-main-card {
-  padding: 16px;
 }
 
 .hpi-top-row,
@@ -744,6 +742,10 @@ input {
   padding: 0 12px;
 }
 
+.hpi-note-entry {
+  margin-bottom: 12px;
+}
+
 .hpi-mic {
   width: 32px;
   height: 32px;
@@ -755,124 +757,13 @@ input {
   cursor: pointer;
 }
 
-.hpi-template-card {
-  margin-top: 8px;
-  border: 1px solid #e1dde7;
-}
-
-.hpi-template-toolbar,
-.hpi-template-section,
-.hpi-finding-row,
-.hpi-footer-note,
-.reported-by-row,
-.ros-link-row {
-  padding-left: 14px;
-  padding-right: 14px;
-}
-
-.hpi-template-toolbar {
-  justify-content: space-between;
-  min-height: 34px;
-  background: #e9e4ec;
-  color: #8d8a99;
-}
-
-.hpi-template-toolbar-simple {
-  justify-content: flex-end;
-}
-
-.template-controls {
-  display: flex;
-  gap: 16px;
-  font-size: 12px;
-}
-
-.hpi-template-section {
-  min-height: 30px;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid #efeaf3;
-  border-bottom: 1px solid #efeaf3;
-  color: #7b7987;
-}
-
-.hpi-finding-row {
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 14px;
-  padding-top: 18px;
-  padding-bottom: 18px;
-}
-
-.hpi-finding-row.compact {
-  padding-top: 20px;
-  padding-bottom: 28px;
-}
-
-.finding-label {
-  color: #777583;
-}
-
-.finding-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-content: flex-start;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  border-radius: 4px;
-  padding: 0 10px;
-  color: #7a7e83;
-}
-
-.chip-blue {
-  background: #dcedf8;
-}
-
-.chip-yellow {
-  background: #f1f1c9;
-}
-
-.chip-red {
-  background: #f6dddd;
-}
-
-.hpi-divider {
-  height: 1px;
-  margin: 0 14px;
-  background: #ece7f1;
-}
-
-.hpi-footer-note {
-  margin-top: 12px;
-}
-
-.reported-by-row {
-  gap: 10px;
-  padding-top: 10px;
-  padding-bottom: 12px;
-  color: #666370;
-}
-
-.reported-pill {
-  height: 32px;
-  padding: 0 12px;
-  border: 1px solid #d6d2de;
-  border-radius: 3px;
-  background: #fff;
-  color: #6a6775;
-}
-
 .ros-link-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-top: 12px;
+  padding-top: 10px;
   color: #666370;
+  border-top: 1px solid #ebe7f0;
 }
 
 @keyframes spin {
