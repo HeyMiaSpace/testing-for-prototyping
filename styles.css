@@ -663,36 +663,14 @@ input {
 }
 
 .hpi-layout {
-  display: grid;
-  grid-template-columns: 29% 54% 17%;
-  gap: 14px;
+  display: block;
 }
 
-.hpi-sidebar-card,
-.hpi-main-card,
-.hpi-right-rail {
-  background: #fff;
-}
-
-.hpi-sidebar-card,
 .hpi-main-card {
+  background: #fff;
   border: 1px solid #dfdbe6;
 }
 
-.hpi-sidebar-card {
-  padding: 18px 14px 16px;
-}
-
-.hpi-sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #e7e2ee;
-  padding-bottom: 12px;
-}
-
-.hpi-sidebar-header h3,
 .hpi-title-wrap h2 {
   margin: 0;
   color: #666189;
@@ -700,25 +678,8 @@ input {
   font-weight: 400;
 }
 
-.allergy-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #aaa5b5;
-  font-size: 12px;
-}
-
-.allergy-badge {
-  border: 1px solid #d4d0db;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 11px;
-  color: #767387;
-}
-
 .round-plus,
-.round-star,
-.round-chevron {
+.round-star {
   width: 30px;
   height: 30px;
   border-radius: 999px;
@@ -734,60 +695,6 @@ input {
 
 .round-star {
   font-size: 19px;
-}
-
-.round-chevron {
-  font-size: 27px;
-}
-
-.allergy-source-row,
-.allergy-item,
-.allergy-note,
-.allergy-reviewed {
-  border-bottom: 1px solid #ece7f1;
-  padding: 12px 2px;
-}
-
-.allergy-source-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #5d6293;
-}
-
-.allergy-item strong,
-.allergy-item span {
-  display: block;
-}
-
-.allergy-item strong {
-  margin-bottom: 8px;
-  font-size: 15px;
-  color: #444551;
-}
-
-.allergy-item span,
-.allergy-reviewed {
-  color: #8d8c98;
-}
-
-.nkda-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 14px 2px 8px;
-  color: #555764;
-}
-
-.allergy-warning {
-  margin: 0 2px 16px;
-  color: #3d3e48;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.allergy-note {
-  color: #a3a0ad;
 }
 
 .hpi-main-card {
@@ -870,21 +777,8 @@ input {
   color: #8d8a99;
 }
 
-.template-title-group {
-  gap: 8px;
-}
-
-.template-title {
-  color: #67628a;
-}
-
-.template-close {
-  border: 0;
-  background: transparent;
-  color: #3791c5;
-  cursor: pointer;
-  font-size: 24px;
-  line-height: 1;
+.hpi-template-toolbar-simple {
+  justify-content: flex-end;
 }
 
 .template-controls {
@@ -981,19 +875,6 @@ input {
   color: #666370;
 }
 
-.hpi-right-rail {
-  border: 1px solid transparent;
-}
-
-.hpi-orders-link {
-  width: 100%;
-  min-height: 42px;
-  border: 1px solid #ded9e9;
-  background: #fff;
-  color: #258ec6;
-  cursor: pointer;
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1025,7 +906,4 @@ input {
     padding: 14px 18px;
   }
 
-  .hpi-layout {
-    grid-template-columns: 1fr;
-  }
 }
